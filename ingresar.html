@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Ingresar | NEAR</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
+
+body{
+font-family:Arial,Helvetica,sans-serif;
+background:#f4f7fb;
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+color:#172033;
+}
+
+.container{
+width:100%;
+max-width:460px;
+background:white;
+padding:35px;
+border-radius:18px;
+box-shadow:0 10px 40px rgba(0,0,0,.08);
+}
+
+.logo{
+text-align:center;
+font-size:32px;
+font-weight:800;
+color:#1769ff;
+margin-bottom:8px;
+}
+
+.subtitle{
+text-align:center;
+color:#718096;
+margin-bottom:28px;
+}
+
+h1{
+font-size:25px;
+margin-bottom:22px;
+text-align:center;
+}
+
+.field{
+margin-bottom:16px;
+}
+
+label{
+display:block;
+font-size:13px;
+font-weight:bold;
+margin-bottom:7px;
+}
+
+input{
+width:100%;
+padding:13px;
+border:1px solid #d9dfe8;
+border-radius:9px;
+font-size:15px;
+outline:none;
+}
+
+input:focus{
+border-color:#1769ff;
+}
+
+button{
+width:100%;
+border:0;
+background:#1769ff;
+color:white;
+padding:14px;
+border-radius:9px;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+}
+
+button:hover{
+background:#0f58db;
+}
+
+.register{
+text-align:center;
+margin-top:20px;
+color:#718096;
+font-size:14px;
+}
+
+.register a{
+color:#1769ff;
+text-decoration:none;
+font-weight:bold;
+}
+
+.back{
+display:block;
+text-align:center;
+margin-top:18px;
+color:#1769ff;
+text-decoration:none;
+font-size:14px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="logo">
+NEAR.
+</div>
+
+<div class="subtitle">
+Soluciones y servicios cerca tuyo
+</div>
+
+<h1>
+Ingresar a tu cuenta
+</h1>
+
+<form onsubmit="ingresar(event)">
+
+<div class="field">
+
+<label>
+Correo electrónico
+</label>
+
+<input
+type="email"
+id="email"
+placeholder="tu@email.com"
+required
+>
+
+</div>
+
+<div class="field">
+
+<label>
+Contraseña
+</label>
+
+<input
+type="password"
+id="password"
+placeholder="Tu contraseña"
+required
+>
+
+</div>
+
+<button type="submit">
+Ingresar
+</button>
+
+</form>
+
+<div class="register">
+¿Todavía no tenés una cuenta?
+<a href="registro.html">
+Crear cuenta
+</a>
+</div>
+
+<a class="back" href="index.html">
+← Volver a NEAR
+</a>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL = "https://wcswllpdxzmfvhcdxaah.supabase.co";
+
+const SUPABASE_KEY = "sb_publishable_Ft4blW6HVC-IBT7EfKHxhA_a4OPouAy";
+
+const supabase = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+async function ingresar(event){
+
+    event.preventDefault();
+
+    const email = document.getElementById("email").value.trim();
+
+    const password = document.getElementById("password").value;
+
+
+    const { data, error } =
+        await supabase.auth.signInWithPassword({
+
+            email: email,
+
+            password: password
+
+        });
+
+
+    if(error){
+
+        alert(
+            "No se pudo iniciar sesión: " +
+            error.message
+        );
+
+        console.error(error);
+
+        return;
+    }
+
+
+    alert("¡Ingresaste correctamente a NEAR!");
+
+    window.location.href = "index.html";
+
+}
+
+</script>
+
+</body>
+</html>
