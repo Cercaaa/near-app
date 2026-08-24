@@ -286,33 +286,94 @@ Ingresar
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
 
-function registrar(event){
+const SUPABASE_URL = "https://wcswllpdxzmfvhcdxaah.supabase.co";
 
-event.preventDefault();
+const SUPABASE_KEY = "sb_publishable_Ft4blW6HVC-IBT7EfKHxhA_a4OPouAy";
 
-const nombre =
-document.getElementById("nombre").value;
-
-const tipo =
-document.querySelector(
-'input[name="tipo"]:checked'
-).value;
-
-if(tipo === "prestador"){
-
-alert(
-"¡Bienvenida/o a NEAR! Tu perfil para ofrecer servicios está listo para el próximo paso."
+const supabase = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
 );
 
-}else{
 
-alert(
-"¡Cuenta creada! Bienvenida/o a NEAR."
-);
+async function registrar(event) {
 
-}
+    event.preventDefault();
+
+    const nombre = document.getElementById("nombre").value.trim();
+
+    const email = document.getElementById("email").value.trim();
+  const telefono = document.getElementById("telefono").value.trim();
+const ciudad = document.getElementById("ciudad").value.trim();
+
+    const password = document.getElementById("password").value;
+
+    const tipo = document.querySelector(
+        'input[name="tipo"]:checked'
+    ).value;
+
+
+ if (!nombre || !email || !telefono || !ciudad || !password) {
+
+      alert("Por favor completá todos los campos.");
+
+        return;
+
+    }
+
+
+    if (password.length < 6) {
+
+        alert("La contraseña debe tener al menos 6 caracteres.");
+
+        return;
+
+    }
+
+
+    const { data, error } = await supabase.auth.signUp({
+
+        email: email,
+
+        password: password,
+
+        options: {
+
+      data: {
+    nombre: nombre,
+    telefono: telefono,
+    ciudad: ciudad,
+    tipo: tipo
+
+            }
+
+        }
+
+    });
+
+
+    if (error) {
+
+        alert("No se pudo crear la cuenta: " + error.message);
+
+        console.error(error);
+
+        return;
+
+    }
+
+
+    alert(
+        "¡Cuenta creada correctamente! " +
+        "Revisá tu correo electrónico para confirmar tu cuenta."
+    );
+
+
+    window.location.href = "ingresar.html";
 
 }
 
