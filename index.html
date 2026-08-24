@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NEAR | Soluciones cerca tuyo</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f7fb;
+    color:#172033;
+}
+
+header{
+    background:#ffffff;
+    padding:18px 7%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid #e5e9f0;
+}
+
+.logo{
+    font-size:30px;
+    font-weight:800;
+    color:#1769ff;
+}
+
+.logo span{
+    color:#172033;
+}
+
+.login{
+    background:#1769ff;
+    color:white;
+    border:0;
+    padding:11px 18px;
+    border-radius:9px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.hero{
+    padding:65px 7% 45px;
+    background:linear-gradient(135deg,#eef5ff,#ffffff);
+}
+
+.hero h1{
+    font-size:45px;
+    max-width:650px;
+    line-height:1.08;
+    margin-bottom:18px;
+}
+
+.hero h1 span{
+    color:#1769ff;
+}
+
+.hero p{
+    font-size:19px;
+    color:#667085;
+    max-width:600px;
+    margin-bottom:28px;
+}
+
+.search{
+    max-width:650px;
+    display:flex;
+    background:white;
+    padding:8px;
+    border-radius:14px;
+    box-shadow:0 8px 30px #19345c18;
+}
+
+.search input{
+    flex:1;
+    border:0;
+    outline:0;
+    padding:15px;
+    font-size:16px;
+}
+
+.search button{
+    background:#1769ff;
+    color:white;
+    border:0;
+    border-radius:9px;
+    padding:0 22px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.section{
+    padding:35px 7%;
+}
+
+.section h2{
+    margin-bottom:20px;
+    font-size:25px;
+}
+
+.categories{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.category{
+    background:white;
+    padding:22px;
+    border-radius:14px;
+    border:1px solid #e5e9f0;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.category:hover{
+    transform:translateY(-3px);
+    box-shadow:0 8px 25px #00000010;
+}
+
+.icon{
+    font-size:30px;
+    margin-bottom:12px;
+}
+
+.category strong{
+    display:block;
+    margin-bottom:5px;
+}
+
+.category small{
+    color:#7a8495;
+}
+
+.urgent{
+    margin:10px 7% 40px;
+    padding:28px;
+    border-radius:16px;
+    background:#172033;
+    color:white;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+}
+
+.urgent h2{
+    margin-bottom:7px;
+}
+
+.urgent p{
+    color:#c5ccda;
+}
+
+.urgent button{
+    background:#ff5757;
+    color:white;
+    border:0;
+    padding:14px 20px;
+    border-radius:9px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.services{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.service{
+    background:white;
+    border-radius:14px;
+    padding:20px;
+    border:1px solid #e5e9f0;
+}
+
+.service-top{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:12px;
+}
+
+.stars{
+    color:#f59e0b;
+}
+
+.available{
+    color:#16a36a;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.service p{
+    color:#718096;
+    margin:8px 0;
+}
+
+.service button{
+    width:100%;
+    padding:11px;
+    margin-top:12px;
+    border:0;
+    background:#eef4ff;
+    color:#1769ff;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+footer{
+    margin-top:40px;
+    background:#111827;
+    color:white;
+    padding:30px 7%;
+}
+
+footer p{
+    color:#aeb7c7;
+    margin-top:8px;
+}
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:#00000088;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal.active{
+    display:flex;
+}
+
+.modal-box{
+    background:white;
+    width:100%;
+    max-width:430px;
+    padding:28px;
+    border-radius:16px;
+}
+
+.modal-box h2{
+    margin-bottom:18px;
+}
+
+.field{
+    margin-bottom:15px;
+}
+
+.field label{
+    display:block;
+    font-size:13px;
+    color:#667085;
+    margin-bottom:6px;
+}
+
+.field input,
+.field textarea,
+.field select{
+    width:100%;
+    padding:12px;
+    border:1px solid #d9dfe8;
+    border-radius:8px;
+    font-size:15px;
+}
+
+.field textarea{
+    height:90px;
+    resize:none;
+}
+
+.modal-buttons{
+    display:flex;
+    gap:10px;
+}
+
+.modal-buttons button{
+    flex:1;
+    padding:12px;
+    border:0;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.cancel{
+    background:#edf0f4;
+}
+
+.confirm{
+    background:#1769ff;
+    color:white;
+}
+
+@media(max-width:800px){
+
+    .hero h1{
+        font-size:36px;
+    }
+
+    .categories{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .services{
+        grid-template-columns:1fr;
+    }
+
+    .urgent{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .search{
+        flex-direction:column;
+        gap:8px;
+    }
+
+    .search button{
+        padding:13px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+NEAR<span>.</span>
+</div>
+
+<button class="login" onclick="abrirLogin()">
+Ingresar
+</button>
+
+</header>
+
+<section class="hero">
+
+<h1>
+¿Qué necesitás <span>resolver</span> hoy?
+</h1>
+
+<p>
+Encontrá personas cerca tuyo que pueden ayudarte con tareas, compras,
+envíos, reparaciones y mucho más.
+</p>
+
+<div class="search">
+
+<input
+id="busqueda"
+type="text"
+placeholder="Ej.: necesito hacer una compra..."
+>
+
+<button onclick="buscar()">
+Buscar
+</button>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>
+¿Qué necesitás?
+</h2>
+
+<div class="categories">
+
+<div class="category" onclick="abrirTarea('Compras')">
+<div class="icon">🛒</div>
+<strong>Compras</strong>
+<small>Compras y mandados</small>
+</div>
+
+<div class="category" onclick="abrirTarea('Envíos')">
+<div class="icon">📦</div>
+<strong>Envíos</strong>
+<small>Retirar y entregar cosas</small>
+</div>
+
+<div class="category" onclick="abrirTarea('Hogar')">
+<div class="icon">🏠</div>
+<strong>Hogar</strong>
+<small>Limpieza y ayuda</small>
+</div>
+
+<div class="category" onclick="abrirTarea('Mascotas')">
+<div class="icon">🐶</div>
+<strong>Mascotas</strong>
+<small>Cuidado y paseos</small>
+</div>
+
+<div class="category" onclick="abrirTarea('Reparaciones')">
+<div class="icon">🔧</div>
+<strong>Reparaciones</strong>
+<small>Ayuda para arreglos</small>
+</div>
+
+<div class="category" onclick="abrirTarea('Traslados')">
+<div class="icon">🚗</div>
+<strong>Traslados</strong>
+<small>Llevar o traer cosas</small>
+</div>
+
+<div class="category" onclick="abrirTarea('Trámites')">
+<div class="icon">📄</div>
+<strong>Trámites</strong>
+<small>Ayuda con gestiones</small>
+</div>
+
+<div class="category" onclick="abrirTarea('Otros')">
+<div class="icon">✨</div>
+<strong>Otra cosa</strong>
+<small>Contanos qué necesitás</small>
+</div>
+
+</div>
+
+</section>
+
+<section class="urgent">
+
+<div>
+<h2>¿Necesitás ayuda ahora?</h2>
+<p>Encontramos personas disponibles cerca de vos.</p>
+</div>
+
+<button onclick="ayudaUrgente()">
+NECESITO AYUDA
+</button>
+
+</section>
+
+<section class="section">
+
+<h2>
+Personas disponibles cerca tuyo
+</h2>
+
+<div class="services">
+
+<div class="service">
+
+<div class="service-top">
+<strong>Mariana</strong>
+<span class="stars">★★★★★</span>
+</div>
+
+<div class="available">
+● Disponible ahora
+</div>
+
+<p>126 trabajos realizados</p>
+<p>📍 A 0,8 km de distancia</p>
+
+<button onclick="contactar('Mariana')">
+Solicitar servicio
+</button>
+
+</div>
+
+<div class="service">
+
+<div class="service-top">
+<strong>Lucas</strong>
+<span class="stars">★★★★★</span>
+</div>
+
+<div class="available">
+● Disponible ahora
+</div>
+
+<p>84 trabajos realizados</p>
+<p>📍 A 1,2 km de distancia</p>
+
+<button onclick="contactar('Lucas')">
+Solicitar servicio
+</button>
+
+</div>
+
+<div class="service">
+
+<div class="service-top">
+<strong>Sofía</strong>
+<span class="stars">★★★★★</span>
+</div>
+
+<div class="available">
+● Disponible ahora
+</div>
+
+<p>57 trabajos realizados</p>
+<p>📍 A 1,5 km de distancia</p>
+
+<button onclick="contactar('Sofía')">
+Solicitar servicio
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+<footer>
+
+<strong>NEAR.</strong>
+
+<p>
+Soluciones y servicios cerca tuyo.
+</p>
+
+</footer>
+
+
+<div class="modal" id="modal">
+
+<div class="modal-box">
+
+<h2 id="tituloModal">
+Publicar una tarea
+</h2>
+
+<div class="field">
+
+<label>
+¿Qué necesitás?
+</label>
+
+<input
+id="tipoTarea"
+type="text"
+placeholder="Ej.: retirar un paquete"
+>
+
+</div>
+
+<div class="field">
+
+<label>
+¿Dónde?
+</label>
+
+<input
+type="text"
+placeholder="Ciudad o dirección"
+>
+
+</div>
+
+<div class="field">
+
+<label>
+Contanos un poco más
+</label>
+
+<textarea
+placeholder="Describí lo que necesitás..."
+></textarea>
+
+</div>
+
+<div class="field">
+
+<label>
+Presupuesto aproximado
+</label>
+
+<select>
+<option>Quiero recibir ofertas</option>
+<option>$5.000 - $10.000</option>
+<option>$10.000 - $20.000</option>
+<option>Más de $20.000</option>
+</select>
+
+</div>
+
+<div class="modal-buttons">
+
+<button class="cancel" onclick="cerrarModal()">
+Cancelar
+</button>
+
+<button class="confirm" onclick="publicarTarea()">
+Publicar tarea
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+function abrirTarea(tipo){
+
+document.getElementById("tipoTarea").value=tipo;
+
+document.getElementById("tituloModal").innerText=
+"Publicar tarea de "+tipo;
+
+document.getElementById("modal").classList.add("active");
+
+}
+
+function cerrarModal(){
+
+document.getElementById("modal").classList.remove("active");
+
+}
+
+function publicarTarea(){
+
+alert(
+"¡Listo! Tu solicitud fue publicada. NEAR buscará personas disponibles cerca tuyo."
+);
+
+cerrarModal();
+
+}
+
+function ayudaUrgente(){
+
+alert(
+"Buscando personas disponibles cerca tuyo..."
+);
+
+}
+
+function contactar(nombre){
+
+alert(
+"Solicitud enviada a "+nombre+". Próximamente podrás chatear y coordinar el servicio desde NEAR."
+);
+
+}
+
+function buscar(){
+
+let texto=document.getElementById("busqueda").value;
+
+if(texto.trim()===""){
+
+alert("Contanos qué necesitás y buscamos una solución.");
+
+return;
+
+}
+
+abrirTarea("Tu solicitud");
+
+}
+
+function abrirLogin(){
+
+alert(
+"La función de registro e inicio de sesión será incorporada en la próxima versión."
+);
+
+}
+
+</script>
+
+</body>
+</html>
